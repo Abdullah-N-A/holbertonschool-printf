@@ -1,2 +1,11 @@
-# holbertonschool-printf
-new task 
+# printf
+
+This project is a custom implementation of the C standard library function `printf`.  
+The function is named `_printf` and mimics the behavior of `printf` for the supported conversion specifiers.
+
+---
+
+## Requirements
+- Compilation will be done on **Ubuntu 20.04 LTS** with:
+  ```bash
+  gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -Wno-format *.c
