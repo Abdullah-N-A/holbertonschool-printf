@@ -25,33 +25,33 @@ int _printf(const char *format, ...)
 			if (!format[i])
 				return (va_end(args), -1);
 
-			switch (format[i])
+			if (format[i] == 'c')
 			{
-				case 'c':
-					write(1, &(char){va_arg(args, int)}, 1);
-					count++;
-					break;
-				case 's':
+				char c = va_arg(args, int);
+				write(1, &c, 1);
+				count++;
+			}
+			else if (format[i] == 's')
+			{
+				char *s = va_arg(args, char *);
+				if (!s)
+					s = "(null)";
+				while (*s)
 				{
-					char *s = va_arg(args, char *);
-
-					if (!s)
-						s = "(null)";
-					while (*s)
-					{
-						write(1, s++, 1);
-						count++;
-					}
-					break;
-				}
-				case '%':
-					write(1, "%", 1);
+					write(1, s++, 1);
 					count++;
-					break;
-				default:
-					write(1, "%", 1);
-					write(1, &format[i], 1);
-					count += 2;
+				}
+			}
+			else if (format[i] == '%')
+			{
+				write(1, "%", 1);
+				count++;
+			}
+			else
+			{
+				write(1, "%", 1);
+				write(1, &format[i], 1);
+				count += 2;
 			}
 		}
 		else
