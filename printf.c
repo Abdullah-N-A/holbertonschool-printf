@@ -1,69 +1,59 @@
 #include "main.h"
-#include <stdarg.h>
-#include <unistd.h>
 
 /**
- * _printf - prints characters, strings, and percent signs
- * @format: format string containing specifiers
- * Return: number of characters printed, -1 on error
+ * _printf - produces output according to a format
+ * @format: character string
+ *
+ * Return: number of characters printed
  */
 int _printf(const char *format, ...)
 {
 	va_list args;
 	int i = 0, count = 0;
-
-	if (!format)
-		return (-1);
+	char c, *s;
 
 	va_start(args, format);
 
-	while (format[i])
+	while (format && format[i])
 	{
 		if (format[i] == '%')
 		{
 			i++;
-			if (!format[i])
+			switch (format[i])
 			{
-				va_end(args);
-				return (-1);
-			}
-			if (format[i] == 'c')
-			{
-				char c = va_arg(args, int);
-				write(1, &c, 1);
-				count++;
-			}
-			else if (format[i] == 's')
-			{
-				char *s = va_arg(args, char *);
-				if (!s)
-					s = "(null)";
-				while (*s)
-				{
-					write(1, s++, 1);
+				case 'c':
+					c = va_arg(args, int);
+					_putchar(c);
 					count++;
-				}
-			}
-			else if (format[i] == '%')
-			{
-				write(1, "%", 1);
-				count++;
-			}
-			else
-			{
-				write(1, "%", 1);
-				write(1, &format[i], 1);
-				count += 2;
+					break;
+				case 's':
+					s = va_arg(args, char *);
+					if (!s)
+						s = "(null)";
+					while (*s)
+					{
+						_putchar(*s++);
+						count++;
+					}
+					break;
+				case '%':
+					_putchar('%');
+					count++;
+					break;
+				default:
+					_putchar('%');
+					_putchar(format[i]);
+					count += 2;
 			}
 		}
 		else
 		{
-			write(1, &format[i], 1);
+			_putchar(format[i]);
 			count++;
 		}
 		i++;
 	}
-
 	va_end(args);
+
 	return (count);
 }
