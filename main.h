@@ -1,15 +1,13 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-/**
- * File: main.h
- * Auth: Your Name
- * Desc: Header file for _printf project.
- *       Contains prototype for _printf function.
- */
+#include <stdarg.h>
 
-/* Prototype for _printf function */
+/* _printf function */
 int _printf(const char *format, ...);
 
-#endif /* MAIN_H */
+/* Helper functions for _printf */
+int print_char(char c);
+int print_string(char *s);
 
+#endif /* MAIN_H */

@@ -3,6 +3,38 @@
 #include <unistd.h>
 
 /**
+ * print_char - prints a single character
+ * @c: character to print
+ * Return: 1 (number of characters printed)
+ */
+int print_char(char c)
+{
+	write(1, &c, 1);
+	return (1);
+}
+
+/**
+ * print_string - prints a string
+ * @s: string to print
+ * Return: number of characters printed
+ */
+int print_string(char *s)
+{
+	int count = 0;
+
+	if (!s)
+		s = "(null)";
+
+	while (*s)
+	{
+		write(1, s++, 1);
+		count++;
+	}
+
+	return (count);
+}
+
+/**
  * _printf - prints characters, strings, and percent signs
  * @format: format string containing specifiers
  * Return: number of characters printed, -1 on error
@@ -26,39 +58,20 @@ int _printf(const char *format, ...)
 				return (va_end(args), -1);
 
 			if (format[i] == 'c')
-			{
-				char c = va_arg(args, int);
-				write(1, &c, 1);
-				count++;
-			}
+				count += print_char(va_arg(args, int));
 			else if (format[i] == 's')
-			{
-				char *s = va_arg(args, char *);
-				if (!s)
-					s = "(null)";
-				while (*s)
-				{
-					write(1, s++, 1);
-					count++;
-				}
-			}
+				count += print_string(va_arg(args, char *));
 			else if (format[i] == '%')
-			{
-				write(1, "%", 1);
-				count++;
-			}
+				count += print_char('%');
 			else
 			{
-				write(1, "%", 1);
-				write(1, &format[i], 1);
-				count += 2;
+				count += print_char('%');
+				count += print_char(format[i]);
 			}
 		}
 		else
-		{
-			write(1, &format[i], 1);
-			count++;
-		}
+			count += print_char(format[i]);
+
 		i++;
 	}
 
