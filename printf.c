@@ -1,59 +1,67 @@
 #include "main.h"
+#include <stdarg.h>
+#include <unistd.h>
 
 /**
- * _printf - produces output according to a format
- * @format: character string
- *
- * Return: number of characters printed
+ * _printf - prints characters, strings, and percent signs
+ * @format: format string containing specifiers
+ * Return: number of characters printed, -1 on error
  */
 int _printf(const char *format, ...)
 {
 	va_list args;
 	int i = 0, count = 0;
-	char c, *s;
+
+	if (!format)
+		return (-1);
 
 	va_start(args, format);
 
-	while (format && format[i])
+	while (format[i])
 	{
 		if (format[i] == '%')
 		{
 			i++;
+			if (!format[i])
+				return (va_end(args), -1);
+
 			switch (format[i])
 			{
 				case 'c':
-					c = va_arg(args, int);
-					_putchar(c);
+					write(1, &(char){va_arg(args, int)}, 1);
 					count++;
 					break;
 				case 's':
-					s = va_arg(args, char *);
+				{
+					char *s = va_arg(args, char *);
+
 					if (!s)
 						s = "(null)";
 					while (*s)
 					{
-						_putchar(*s++);
+						write(1, s++, 1);
 						count++;
 					}
 					break;
+				}
 				case '%':
-					_putchar('%');
+					write(1, "%", 1);
 					count++;
 					break;
 				default:
-					_putchar('%');
-					_putchar(format[i]);
+					write(1, "%", 1);
+					write(1, &format[i], 1);
 					count += 2;
 			}
 		}
 		else
 		{
-			_putchar(format[i]);
+			write(1, &format[i], 1);
 			count++;
 		}
 		i++;
 	}
-	va_end(args);
 
+	va_end(args);
 	return (count);
 }
