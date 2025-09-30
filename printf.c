@@ -3,42 +3,9 @@
 #include <unistd.h>
 
 /**
- * print_char - prints a single character
- * @args: va_list containing the character
- * Return: 1 (number of chars printed)
- */
-int print_char(va_list args)
-{
-	char c = va_arg(args, int);
-
-	write(1, &c, 1);
-	return (1);
-}
-
-/**
- * print_string - prints a string
- * @args: va_list containing the string
- * Return: number of chars printed
- */
-int print_string(va_list args)
-{
-	char *s = va_arg(args, char *);
-	int count = 0;
-
-	if (!s)
-		s = "(null)";
-	while (*s)
-	{
-		write(1, s++, 1);
-		count++;
-	}
-	return (count);
-}
-
-/**
- * _printf - custom printf function supporting %c, %s, %%
+ * _printf - prints characters, strings, and percent signs
  * @format: format string containing specifiers
- * Return: number of characters printed, -1 if error
+ * Return: number of characters printed, -1 on error
  */
 int _printf(const char *format, ...)
 {
@@ -60,11 +27,23 @@ int _printf(const char *format, ...)
 				va_end(args);
 				return (-1);
 			}
-
 			if (format[i] == 'c')
-				count += print_char(args);
+			{
+				char c = va_arg(args, int);
+				write(1, &c, 1);
+				count++;
+			}
 			else if (format[i] == 's')
-				count += print_string(args);
+			{
+				char *s = va_arg(args, char *);
+				if (!s)
+					s = "(null)";
+				while (*s)
+				{
+					write(1, s++, 1);
+					count++;
+				}
+			}
 			else if (format[i] == '%')
 			{
 				write(1, "%", 1);
@@ -88,4 +67,3 @@ int _printf(const char *format, ...)
 	va_end(args);
 	return (count);
 }
-
