@@ -32,5 +32,5 @@ int print_int(int n)
     while (i--)
         count += write(1, &buf[i], 1);
 
-    return (count)
+    return (count);
 }
