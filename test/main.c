@@ -40,5 +40,9 @@ int main(void)
     printf("Len:[%d]\n", len2);
     _printf("Unknown:[%r]\n");
     printf("Unknown:[%r]\n");
+   _printf("Testing d: [%d]\n", 12345);
+ _printf("Testing i: [%i]\n", -6789);
+ printf("Testing d: [%d]\n", 12345);
+ printf("Testing i: [%i]\n", -6789);
     return (0);
 }
