@@ -44,5 +44,7 @@ int main(void)
  _printf("Testing i: [%i]\n", -6789);
  printf("Testing d: [%d]\n", 12345);
  printf("Testing i: [%i]\n", -6789);
+_printf("Binary of 98: %b\n", 98);
+printf("Expected: 1100010\n");
     return (0);
 }
