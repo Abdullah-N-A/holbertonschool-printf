@@ -46,5 +46,17 @@ int main(void)
  printf("Testing i: [%i]\n", -6789);
 _printf("Binary of 98: %b\n", 98);
 printf("Expected: 1100010\n");
+_printf("Unsigned: %u\n", 4294967295);
+printf("Unsigned: %u\n", 4294967295);
+
+_printf("Octal: %o\n", 98);
+printf("Octal: %o\n", 98);
+
+_printf("Hex lowercase: %x\n", 255);
+printf("Hex lowercase: %x\n", 255);
+
+_printf("Hex UPPERCASE: %X\n", 255);
+printf("Hex UPPERCASE: %X\n", 255);
+
     return (0);
 }
